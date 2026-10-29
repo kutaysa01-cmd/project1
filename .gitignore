@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Data (never commit real ticket data!)
+data/tickets/*
+data/manuals/*
+!data/tickets/.gitkeep
+!data/manuals/.gitkeep
+!data/tickets/README.md
+!data/manuals/README.md
+
+# Vector DB
+chroma_db/
+*.sqlite3
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Local config
+config.local.yaml
+.env

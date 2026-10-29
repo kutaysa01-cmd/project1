@@ -1,0 +1,48 @@
+# T3000 Problem Finder - Configuration
+# Edit this file to customize behavior
+
+# ===== LLM Settings =====
+llm:
+  # Ollama model name. Options (install via `ollama pull <name>`):
+  #   qwen2.5:7b       - Best Turkish support, balanced (recommended)
+  #   llama3.1:8b      - Good English, decent Turkish
+  #   phi3.5:3.8b      - Fastest, lower quality
+  #   qwen2.5:14b      - Better quality, needs 16GB+ RAM
+  model: "qwen2.5:7b"
+  temperature: 0.2       # Lower = more deterministic
+  num_ctx: 8192          # Context window
+  host: "http://localhost:11434"
+
+# ===== Embedding Settings =====
+embedding:
+  # Multilingual embedding model (Turkish supported)
+  #   intfloat/multilingual-e5-small  - Fast, ~500MB
+  #   intfloat/multilingual-e5-base   - Balanced (recommended)
+  #   BAAI/bge-m3                     - Best quality, ~2GB
+  model: "intfloat/multilingual-e5-base"
+  device: "cpu"          # Change to "cuda" if you get a GPU later
+
+# ===== Vector Database =====
+vectordb:
+  path: "./chroma_db"
+  collection: "t3000_knowledge"
+
+# ===== Data Paths =====
+data:
+  tickets_dir: "./data/tickets"
+  manuals_dir: "./data/manuals"
+
+# ===== Chunking =====
+chunking:
+  chunk_size: 800        # Characters per chunk
+  chunk_overlap: 150     # Overlap between chunks
+
+# ===== Retrieval =====
+retrieval:
+  top_k: 5               # Number of chunks to retrieve
+  min_score: 0.3         # Minimum similarity score
+
+# ===== UI =====
+ui:
+  language: "tr"         # tr or en
+  theme: "dark"          # dark or light

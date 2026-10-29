@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Ticket 3</title></head>
+<body>
+    <h1>BACnet IP cihaz T3000'de offline görünüyor</h1>
+    <p>Ticket No: T3K-2024-0033 | Durum: Resolved | Öncelik: High</p>
+    <p><b>Oluşturma:</b> 2024-07-11 | <b>Çözüm:</b> 2024-07-11 (aynı gün)</p>
+
+    <h2>Problem</h2>
+    <p>
+        3. kattaki AHU-5 BACnet/IP cihazı T3000 Device List'te "offline" (gri)
+        gözüküyor. Ping atılabiliyor (192.168.14.52 cevap veriyor), yani network
+        katmanı OK. Wireshark'ta BACnet trafiği var ancak T3000 WhoIs broadcast'lerine
+        I-Am cevabı gelmiyor sadece bu cihazdan. Diğer AHU'lar (AHU-1..4) normal.
+    </p>
+
+    <h2>Çözüm</h2>
+    <p>
+        AHU-5'in Device Instance ID'si 1050050 yanlışlıkla başka bir cihazla
+        (chiller controller 1050050) aynıydı. BACnet'te Device Instance ID
+        <b>network çapında benzersiz</b> olmak zorunda. Çakışma durumunda:
+    </p>
+    <ol>
+        <li>BACnet Discovery Tool (Yabe veya VTS) ile network tara</li>
+        <li>Aynı Device Instance ID'yi iki farklı IP'den gösteren cihazı bul</li>
+        <li>AHU-5'in local HMI'ından Device Instance'ı 1050052'ye değiştir</li>
+        <li>Cihazı reboot et (BACnet reset komutu)</li>
+        <li>T3000'de "Rediscover devices" yap</li>
+    </ol>
+    <p>
+        Cihaz 90 saniye içinde online geldi, trending ve komutlar normal çalışıyor.
+    </p>
+    <p>
+        <b>Not:</b> IT grubunun kullandığı IP envanterinde BACnet Device Instance
+        kaydı yoktu. Yeni cihaz devreye alınırken T3000 projesinde kullanılan
+        Device Instance Registry'ye eklenmesi SOP'a yazıldı.
+    </p>
+
+    <h2>Yorumlar</h2>
+    <p>
+        [Teknisyen] Çakışma T3000 tarafında Discovery Conflict log'unda da görünür
+        ama default olarak kapalı. Enable etmeyi öneririm.
+    </p>
+</body>
+</html>

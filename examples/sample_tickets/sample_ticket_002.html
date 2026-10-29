@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket #T3K-2024-0017</title>
+</head>
+<body>
+    <div class="ticket">
+        <div class="ticket-id">T3K-2024-0017</div>
+        <div class="ticket-title">Chiller #2 düşük verimle çalışıyor, COP düşük</div>
+        <div class="status">Resolved</div>
+        <div class="priority">Medium</div>
+        <div class="category">Chiller / HVAC</div>
+        <div class="created-at">2024-05-04 08:10</div>
+        <div class="resolved-at">2024-05-06 11:30</div>
+        <div class="assignee">A. Kaya</div>
+
+        <div class="problem">
+            Chiller #2 (York YLAA-170) nominal COP 3.4 iken T3000 trending'de ortalama 2.1
+            gösteriyor. Soğutma yükü yaklaşık %70 ama kompresor akımı neredeyse full load.
+            Condenser water inlet/outlet delta T de normalden 3K düşük (6K yerine 3K).
+            Enerji faturası son 2 ayda %18 arttı.
+        </div>
+
+        <div class="solution">
+            Düşük COP'nin iki ayrı sebebi vardı:
+
+            1. CONDENSER FOULING: Condenser tube'lar kireçlenmişti. Delta T düşüklüğünün
+               ana sebebi. Chemical cleaning yapıldı (sulfamic acid %5, 4 saat circulation).
+
+            2. SETPOINT HATASI: T3000 chiller sequencing programında chilled water setpoint
+               6.5°C'ye düşürülmüş (orijinal 7.5°C). Birisi geçen hafta manuel değiştirmiş,
+               değişiklik yorumsuz. 1°C düşürme compressor lift'i artırır, COP'u ~%5-7 düşürür.
+               Setpoint 7.5°C'ye geri alındı, change log'a yazıldı.
+
+            Doğrulama (2 gün trending):
+            - Delta T: 3K → 5.8K (normal)
+            - COP: 2.1 → 3.3 (nominal'e yakın)
+            - Günlük enerji: ~%22 düşüş
+
+            Önleyici öneriler:
+            - Condenser cleaning yıllık yapılsın (şu an 3 yılda bir)
+            - T3000 setpoint değişiklikleri için RBAC audit log açılsın
+            - Change management SOP'una setpoint değişiklik formu eklensin
+        </div>
+
+        <div class="comments">
+            [A.Kaya] COP düşüşü tek başına bir alarm değil ama trending'de yakalanabilir.
+            Haftalık otomatik rapor önerilir.
+            [Supervisor] Onaylandı, raporlama iş paketine alındı.
+        </div>
+    </div>
+</body>
+</html>

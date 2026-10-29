@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket #T3K-2024-0001</title>
+</head>
+<body>
+    <div class="ticket">
+        <div class="ticket-id">T3K-2024-0001</div>
+        <div class="ticket-title">Zone 3 sıcaklık sensörü hatalı okuma (-40°C)</div>
+        <div class="status">Resolved</div>
+        <div class="priority">High</div>
+        <div class="category">Temperature Sensor</div>
+        <div class="created-at">2024-03-15 09:22</div>
+        <div class="resolved-at">2024-03-15 14:40</div>
+        <div class="assignee">M. Yılmaz</div>
+
+        <div class="problem">
+            Zone 3 bölgesindeki sıcaklık sensörü sürekli -40°C değeri okuyor.
+            Setpoint 22°C ancak VAV damper tam açık pozisyonda kalıyor ve
+            ısıtma reel kontrolsüz çalışıyor. T3000 kontrol panelinde "SENSOR FAULT"
+            alarmı yok. Modbus RS485 hattı üzerinden geliyor sensor (adres 0x14).
+        </div>
+
+        <div class="solution">
+            Problem sensörün sinyal kablosunun klemensi gevşemesinden kaynaklandı.
+            Çözüm adımları:
+            1. T3000 Konfigüratör üzerinden sensörün ham ADC değerini oku - 0 geliyordu
+            2. Modbus master log'unda CRC error yok, yani iletişim OK ama değer sıfır
+            3. Sensörün fiziksel konumuna git (Zone 3 return air duct)
+            4. Sensör klemens kapağını aç
+            5. Sinyal (+) ve (-) kablolarının torkunu kontrol et - gevşekti
+            6. Tork tabancası ile 0.5 Nm'ye sık
+            7. Panel üzerinden sensörü yeniden kalibre et (setup > sensors > zone3 > calibrate)
+
+            Yeniden okuma: 21.8°C (ortam ölçümüyle uyumlu).
+
+            Önleyici: Yarıyıl bakımlarda tüm Modbus sensör klemensleri tork kontrolünden
+            geçirilsin. İş emri BAK-2024-07'ye eklendi.
+        </div>
+
+        <div class="comments">
+            [M.Yılmaz] Benzer problem Zone 7'de 2023'te de olmuştu, aynı root cause.
+            [S.Demir] Dokümantasyon notu eklendi, SOP-ZONE-SENSOR-01 v2.3 güncellendi.
+        </div>
+    </div>
+</body>
+</html>
